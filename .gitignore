@@ -1,0 +1,5 @@
+.env
+extensions/__pycache__
+actions/__pycache__
+shared/__pycache__
+data.json
