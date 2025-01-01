@@ -43,4 +43,3 @@ class Chieur():
             date = _date.split(" ")[0]
             heure = _date.split(" ")[1]
         self.kk.append(Travail(date, heure, id))
-

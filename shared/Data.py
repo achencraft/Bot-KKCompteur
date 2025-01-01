@@ -6,6 +6,7 @@
 import os, json
 from shared.Chieur import Chieur
 
+
 class Data():
 
 
@@ -30,8 +31,7 @@ class Data():
         for c in Data.chieurs:
             if c.discord == userid:
                 return c
-            else:
-                return None
+        return None
             
     def add_user(userid,username):
         Data.chieurs.append(Chieur(username,userid))
@@ -62,11 +62,14 @@ class Data():
 #######################################################################################
 
     def save_data():
+
         with open(Data.conf['JSON_DATA'], "w") as outfile:
 
             out = '{"chieurs":['
 
             for c in Data.chieurs:
+                
+
                 out = out + '{"username":"' + c.username+'","discord":"'+c.discord +'","kk":['
                 
                 for k in c.kk:

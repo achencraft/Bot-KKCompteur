@@ -26,9 +26,9 @@ class Ajouter():
         #si date dans le futur ou avant début année en cours
         if(dt > datetime.datetime.now() or dt < debutannee):
             res = False
-        
 
         titre = ctx.member.name    
+
 
         if(res):
             Ajouter.AddCaca(userid, date)
