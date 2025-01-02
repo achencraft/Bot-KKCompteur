@@ -8,7 +8,7 @@ from shared.Data import Data
 
 class Podium():
 
-    nbr_classement_per_page = 2
+    nbr_classement_per_page = 15
     buttons = []
     buttons.append(
         interactions.Button(
