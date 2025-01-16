@@ -9,7 +9,7 @@ from shared.Data import Data
 class Ajouter():
 
 
-    async def Ajouter(ctx,username, userid, date):
+    async def Ajouter(ctx,username, userid, date, public):
         nbr = Ajouter.GetCacaNumber(userid,username)
         res = True
         dt = datetime.datetime.now()
@@ -38,7 +38,21 @@ class Ajouter():
         else:
             embed = interactions.Embed(color=10632204,title=titre,description="🤮 Erreur de formatage ou de valeur de la date.\n=> jj/mm/aaaa hh:mm")        
         embed.set_footer(text="CacaCorp")
-        await ctx.send(embeds=embed, ephemeral=True)
+
+
+        guild = ctx.guild
+        channel = ""
+        for c in await guild.get_all_channels():
+            if c.id == Data.get_GuildChannel()[1]:
+                channel = c   
+        if(channel == ""):
+            print("Erreur, pas de channel")
+            exit()
+
+        if(public):
+            await channel.send(embeds=embed)
+        else:
+            await ctx.send(embeds=embed, ephemeral=True)
 
 
 #######################################################################################

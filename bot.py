@@ -15,9 +15,9 @@ import asyncio
 config = dotenv_values(".env")
 TOKEN = config['BOT_TOKEN']
 
+
 EXTENSIONS = [
-    'extensions.compteur',
-    'extensions.admin'
+    'extensions.caca'
     ]
 
 async def set_activity():
@@ -31,6 +31,8 @@ async def set_activity():
 Data.Charger_chieurs(config)
 bot = interactions.Client(token=TOKEN)
 asyncio.run(set_activity())
+quot = ""
+
 
 
 #######################################################################################
@@ -43,6 +45,6 @@ for ext in EXTENSIONS:
 #######################################################################################
 #                                     Démarrage                                       #
 #######################################################################################
+
 bot.start()
-    
 

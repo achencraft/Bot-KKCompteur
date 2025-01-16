@@ -41,9 +41,19 @@ class Podium():
 
 
 
-    async def Podium(ctx,userid):
+    async def Podium(ctx,userid,public):
         titre = "🏆 Classement des chieurs "+Data.get_annee()+" 💩"
         Classements = Podium.getPodium(userid)
+
+
+        guild = ctx.guild
+        channel = ""
+        for c in await guild.get_all_channels():
+            if c.id == Data.get_GuildChannel()[1]:
+                channel = c    
+        if(channel == ""):
+            print("Erreur, pas de channel")
+            exit()
 
         if(len(Classements) > 0):
             
@@ -86,7 +96,10 @@ class Podium():
                 boutons[0].disabled = True
                 boutons[1].disabled = True
 
-            await ctx.send(embeds=embed, components=boutons, ephemeral=True)
+            if(public):
+                await channel.send(embeds=embed, components=boutons)
+            else:
+                await ctx.send(embeds=embed, components=boutons, ephemeral=True)
 
         else:
             text = "🚫 Personne n'a chié cette année. 🚫"

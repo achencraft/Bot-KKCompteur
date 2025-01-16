@@ -7,9 +7,10 @@ import interactions
 from actions.Ajouter import Ajouter
 from actions.Podium import Podium
 from actions.Historique import Historique
+from actions.Quotidien import Quotidien
 
 
-class Compteur(interactions.Extension):
+class Caca(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client
 
@@ -25,6 +26,7 @@ class Compteur(interactions.Extension):
                     interactions.Choice(name="Ajouter", value="ajouter"),
                     interactions.Choice(name="Historique", value="historique"),
                     interactions.Choice(name="Podium", value="podium")
+                    #interactions.Choice(name="Quotidien", value="quotidien"),
                     ], #Ajouter par défaut
                 required=False
             ),
@@ -34,21 +36,29 @@ class Compteur(interactions.Extension):
                 type=interactions.OptionType.STRING,
                 required=False,
                 autocomplete=False
+            ),
+            interactions.Option(
+                name="public",
+                description="Réponse visible de tous",
+                type=interactions.OptionType.BOOLEAN,
+                required=False
             )
         ]
     )
-    async def Caca(self, ctx: interactions.CommandContext, action = "ajouter" , date = "now"):
+    async def Caca(self, ctx: interactions.CommandContext, action = "ajouter" , date = "now", public = 1):
 
         user_id = str(ctx.user.id)
         name = ctx.user.username
 
         match action:
             case "ajouter":
-                await Ajouter.Ajouter(ctx,name,user_id, date)
+                await Ajouter.Ajouter(ctx,name,user_id, date, public)
             case "podium":
-                await Podium.Podium(ctx,user_id)
+                await Podium.Podium(ctx,user_id, public)
             case "historique":
                 await Historique.Historique(ctx,user_id)
+            case "quotidien":
+                await Quotidien.Quotidien(ctx)
             case _:
                 None
     
@@ -94,7 +104,7 @@ class Compteur(interactions.Extension):
         await Historique.change_page(ctx, "Last")
  
 def setup(client):
-    Compteur(client)
+    Caca(client)
 
 
 

@@ -3,7 +3,7 @@
 #                                   Classe Data                                     #
 #                                                                                     #
 #######################################################################################
-import os, json
+import os, json, arrow
 from shared.Chieur import Chieur
 
 
@@ -12,6 +12,7 @@ class Data():
 
     chieurs = []
     conf = ""
+    channel = ""
 
     def Charger_chieurs(config):
         Data.conf = config
@@ -39,9 +40,28 @@ class Data():
     def get_annee():
         return Data.conf['ANNEE']
     
+    def get_GuildChannel():
+        return (Data.conf['GUILD_ID'],Data.conf['CHANNEL_ID'])
+    
+
     def getPodium(user_id):
         return sorted(Data.chieurs, key=lambda x: len(x.kk),reverse=True)
     
+    def getChieurOfTheDay():
+        maxKKNbr = 0
+        people = []
+        date = arrow.utcnow().to('Europe/Paris').shift(hours=-6).format('DD/MM/YYYY')
+
+        for c in Data.chieurs:
+            if len(c.kk) > maxKKNbr:
+                maxKKNbr = len(c.kk)
+                people = []
+                people.append((c.username,maxKKNbr))
+            elif len(c.kk) == maxKKNbr:
+                people.append((c.username,maxKKNbr))
+            
+        return people
+
     def getHisto(user_id):
         if(Data.get_user(user_id) != None):
             return sorted(Data.get_user(user_id).kk, key=lambda x: x.id)
